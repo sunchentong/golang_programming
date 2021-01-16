@@ -73,4 +73,22 @@ func main() {
 	//降序排序
 	sort.Sort(sort.Reverse(sort.IntSlice(d[:])))
 	fmt.Println(d)
+
+	//map和slice组合
+	//1. 元素类型为map的slice
+	// eg:
+	//使用make函数创建一个slice s6, s6的元素类型是map,
+	//map中key的类型为string,value的类型为int
+	//注意，使用时，需要对内部的map进行初始化
+	fmt.Printf("====================== map as element in slice \r\n")
+	s6 := make([]map[string]int, 10, 10)
+	s6[0] = make(map[string]int, 1)
+	s6[0]["socre"] = 1
+	fmt.Println(s6)
+
+	//2. 值为slice的map
+	fmt.Printf("====================== slice as the value type in map\r\n")
+	m1 := make(map[string][]string, 10)
+	m1["city"] = []string{"beijing", "shanghai", "guangzhou"}
+	fmt.Println(m1)
 }
