@@ -7,18 +7,21 @@ import (
 	"time"
 )
 
-func main() {
-	// exercise 1.1/1.2
-	command := os.Args[0]
+func test11(command string) {
+	fmt.Printf("-- Exercise 1.1 \n")
 	fmt.Println(command)
+}
 
-	for index, value := range os.Args[1:] {
+func test12(args []string) {
+	fmt.Printf("-- Exercise 1.2 \n")
+	for index, value := range args {
 		fmt.Printf("index : %d , args[%d] : %s \n", index, index, value)
 	}
+}
 
-	// exercise 1.3
+func test13(args []string) {
+	fmt.Printf("-- Exercise 1.3 \n")
 	var s, sep string
-	args := os.Args[1:]
 
 	start := time.Now()
 	// low performace
@@ -32,4 +35,15 @@ func main() {
 	// high performance
 	strings.Join(args, " ")
 	fmt.Printf("%.4fs elapsed \n", time.Since(start).Seconds())
+}
+
+func main() {
+	// exercise 1.1
+	test11(os.Args[0])
+
+	// exercise 1.2
+	test12(os.Args[1:])
+
+	// exercise 1.3
+	test13(os.Args[1:])
 }
