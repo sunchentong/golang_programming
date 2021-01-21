@@ -3,6 +3,8 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"io"
+	"net/http"
 	"os"
 	"strings"
 	"time"
@@ -70,6 +72,28 @@ func countLines(f *os.File, counts map[string]int) {
 	}
 }
 
+func fetchURL(urls []string) {
+	fmt.Println(urls)
+	for _, url := range urls {
+		if strings.HasPrefix(url, "http://") == false {
+			url = "http://" + url
+		}
+		fmt.Printf("url : %s \n", url)
+		resp, err := http.Get(url)
+		if err != nil {
+			fmt.Printf("fetch err : %v \n", err)
+			os.Exit(-1)
+		}
+		n, err := io.Copy(os.Stdout, resp.Body)
+		resp.Body.Close()
+		if err != nil {
+			fmt.Printf("read err : %v \n", err)
+			os.Exit(-2)
+		}
+		fmt.Printf("write : %d ,status : %s \n", n, resp.Status)
+	}
+}
+
 func main() {
 	// exercise 1.1
 	test11(os.Args[0])
@@ -82,4 +106,11 @@ func main() {
 
 	// sample dup1
 	sampleDup()
+
+	//fetch Url
+	urlList := make([]string, 0)
+	urlList = append(urlList, "gopl.io")
+	urlList = append(urlList, "xxx.com")
+	fetchURL(urlList)
+
 }
